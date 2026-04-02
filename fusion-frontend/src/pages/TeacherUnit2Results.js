@@ -8,7 +8,7 @@ export default function TeacherUnit2Results() {
 
   useEffect(() => {
     axios
-      .get("https://fusion0-1.onrender.com/api/assignments/unit/Unit 2")
+      .get("https://fusion-testingphase1.onrender.com/api/assignments/unit/Unit 2")
       .then((res) => setAssignments(res.data))
       .catch((err) => console.log(err));
   }, []);

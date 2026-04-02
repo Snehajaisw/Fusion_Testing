@@ -16,7 +16,7 @@ export default function ManageAssignments() {
   const fetchAssignments = async () => {
     try {
       const res = await axios.get(
-        `https://fusion-backend-testing.onrender.com/api/assignments/all?unit=${unit}`
+        `https://fusion-testingphase1.onrender.com/api/assignments/all?unit=${unit}`
       );
 
       console.log("FULL RESPONSE:", res.data);
@@ -35,7 +35,7 @@ export default function ManageAssignments() {
       return;
 
     try {
-      await axios.delete(`https://fusion-backend-testing.onrender.com/api/assignments/${id}`);
+      await axios.delete(`https://fusion-testingphase1.onrender.com/api/assignments/${id}`);
       alert("Assignment deleted!");
 
       setAssignments(assignments.filter((a) => a._id !== id));

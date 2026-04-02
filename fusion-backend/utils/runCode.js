@@ -5,7 +5,7 @@ export const runCodeAgainstTestcases = async (code, language, testcases) => {
 
   for (const tc of testcases) {
     try {
-      const response = await axios.post("https://fusion0-1.onrender.com/run", {
+      const response = await axios.post("https://fusion-testingphase1.onrender.com/run", {
         code,
         language,
         stdin: tc.input,

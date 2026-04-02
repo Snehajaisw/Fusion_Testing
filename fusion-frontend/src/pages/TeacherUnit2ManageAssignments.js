@@ -12,7 +12,7 @@ export default function TeacherUnit2ManageAssignments() {
   const fetchAssignments = async () => {
     try {
       const res = await axios.get(
-        "https://fusion0-1.onrender.com/api/assignments/unit/2"
+        "https://fusion-testingphase1.onrender.com/api/assignments/unit/2"
       );
       setAssignments(res.data.assignments || []);
     } catch (error) {
@@ -24,7 +24,7 @@ export default function TeacherUnit2ManageAssignments() {
     if (!window.confirm("Delete this assignment?")) return;
 
     try {
-      await axios.delete(`https://fusion0-1.onrender.com/api/assignments/${id}`);
+      await axios.delete(`https://fusion-testingphase1.onrender.com/api/assignments/${id}`);
       fetchAssignments();
     } catch (error) {
       alert("Error deleting assignment");

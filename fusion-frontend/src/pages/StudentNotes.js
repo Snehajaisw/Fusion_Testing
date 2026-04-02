@@ -16,7 +16,7 @@ export default function StudentNotes() {
         console.log("📡 Fetching notes:", subject, unitId);
 
         const res = await axios.get(
-          "https://fusion0-1.onrender.com/api/files/filter",
+          "https://fusion-testingphase1.onrender.com/api/files/filter",
           {
             params: {
               subject,          // c / cpp
@@ -64,7 +64,7 @@ export default function StudentNotes() {
 
               <a
                 className="view-btn"
-                href={`https://fusion0-1.onrender.com/api/files/download/${file.filename}`}
+                href={`https://fusion-testingphase1.onrender.com/api/files/download/${file.filename}`}
                 target="_blank"
                 rel="noreferrer"
               >

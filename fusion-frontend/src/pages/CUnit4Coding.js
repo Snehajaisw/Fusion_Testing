@@ -40,7 +40,7 @@ int main() {
   // 🔥 Fetch GLOBAL coding questions (C language)
 useEffect(() => {
   axios
-    .get("https://fusion0-1.onrender.com/api/coding/practice", {
+    .get("https://fusion-testingphase1.onrender.com/api/coding/practice", {
       params: { language: "c" },
     })
     .then((res) => {
@@ -83,7 +83,7 @@ useEffect(() => {
       setIsRunning(true);
       setCanSubmit(false);
 
-      const res = await axios.post("https://fusion0-1.onrender.com/api/code/run", {
+      const res = await axios.post("https://fusion-testingphase1.onrender.com/api/code/run", {
         code,
         language,
         questionId: selected._id,
@@ -124,7 +124,7 @@ useEffect(() => {
       };
 
       const res = await axios.post(
-        "https://fusion0-1.onrender.com/api/code/submit",
+        "https://fusion-testingphase1.onrender.com/api/code/submit",
         payload
       );
 

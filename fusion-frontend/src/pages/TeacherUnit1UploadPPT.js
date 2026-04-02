@@ -26,7 +26,7 @@ export default function TeacherUnit1UploadPPT() {
 
     try {
       // ⭐ FIXED: Correct API endpoint
-      await axios.post("https://fusion0-1.onrender.com/api/files/upload", formData);
+      await axios.post("https://fusion-testingphase1.onrender.com/api/files/upload", formData);
 
       alert("PPT Uploaded Successfully!");
       setTitle("");

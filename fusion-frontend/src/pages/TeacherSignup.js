@@ -26,7 +26,7 @@ export default function TeacherSignup() {
   }
 
   try {
-    await axios.post("https://fusion0-1.onrender.com/api/auth/signup", {
+    await axios.post("https://fusion-testingphase1.onrender.com/api/auth/signup", {
       name,
       email,
       role: "teacher",

@@ -14,7 +14,7 @@ export default function AdminDashboard() {
   const fetchPending = async () => {
     try {
       const res = await axios.get(
-        "https://fusion-backend-testing.onrender.com/api/auth/pending-teachers"
+        "https://fusion-testingphase1.onrender.com/api/auth/pending-teachers"
       );
       setPendingTeachers(res.data);
     } catch (err) {
@@ -25,7 +25,7 @@ export default function AdminDashboard() {
   const fetchApproved = async () => {
     try {
       const res = await axios.get(
-        "https://fusion-backend-testing.onrender.com/api/auth/approved-teachers"
+        "https://fusion-testingphase1.onrender.com/api/auth/approved-teachers"
       );
       setApprovedTeachers(res.data);
     } catch (err) {
@@ -36,7 +36,7 @@ export default function AdminDashboard() {
   const approveTeacher = async (id) => {
     try {
       await axios.put(
-        `https://fusion-backend-testing.onrender.com/api/auth/approve/${id}`
+        `https://fusion-testingphase1.onrender.com/api/auth/approve/${id}`
       );
 
       fetchPending();

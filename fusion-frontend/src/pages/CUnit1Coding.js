@@ -62,7 +62,7 @@ if __name__ == "__main__":
   // 🔥 Fetch coding questions
   useEffect(() => {
   axios
-    .get(`https://fusion0-1.onrender.com/api/coding/practice?language=${language}`)
+    .get(`https://fusion-testingphase1.onrender.com/api/coding/practice?language=${language}`)
     .then((res) => setQuestions(res.data.questions || []))
     .catch(console.error);
 }, [language]);
@@ -79,7 +79,7 @@ if __name__ == "__main__":
     setIsRunning(true);
     setCanSubmit(false);
 
-    const res = await axios.post("https://fusion-backend-testing.onrender.com/api/coding/run", {
+    const res = await axios.post("https://fusion-testingphase1.onrender.com/api/coding/run", {
       code,
       language,
       questionId: selected._id,
@@ -140,7 +140,7 @@ total: result.totalTestcases,
         maxMarks: result.maxMarks,
       };
 
-const res = await axios.post("https://fusion-backend-testing.onrender.com/api/code/submit", payload);
+const res = await axios.post("https://fusion-testingphase1.onrender.com/api/code/submit", payload);
       if (res.data && res.data.success) {
         alert("✅ Accepted! All testcases passed.");
 

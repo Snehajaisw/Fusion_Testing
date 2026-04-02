@@ -8,7 +8,7 @@ export default function CUnit2Notes() {
 
   useEffect(() => {
     axios
-      .get("https://fusion0-1.onrender.com/api/notes/filter", {
+      .get("https://fusion-testingphase1.onrender.com/api/notes/filter", {
         params: {
           subject: "c",      // 🔥 C course
           unit: 2,           // 🔥 Unit 2
@@ -42,7 +42,7 @@ export default function CUnit2Notes() {
         <p style={{ marginTop: "20px" }}>No notes uploaded yet.</p>
       ) : (
         <iframe
-          src={`https://fusion0-1.onrender.com/api/notes/file/${file}`}
+          src={`https://fusion-testingphase1.onrender.com/api/notes/file/${file}`}
           className="pdf-viewer"
           title="Unit 2 Notes"
         ></iframe>

@@ -19,7 +19,7 @@ export default function SetPassword() {
     }
 
     try {
-      const res = await axios.post("https://fusion0-1.onrender.com/api/auth/set-password", {
+      const res = await axios.post("https://fusion-testingphase1.onrender.com/api/auth/set-password", {
   rollNumber: rollNumber.trim(),
   password: password.trim(),
 });

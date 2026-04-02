@@ -37,7 +37,7 @@ export default function UploadPage({ unit, course }) {
         category,
       });
 
-      await axios.post("https://fusion0-1.onrender.com/api/files/upload", formData);
+      await axios.post("https://fusion-testingphase1.onrender.com/api/files/upload", formData);
       setSuccess(true);
       setTitle("");
       setDescription("");

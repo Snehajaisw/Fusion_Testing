@@ -16,7 +16,7 @@ export default function ViewUploads() {
     const fetchFiles = async () => {
       try {
         console.log("📡 Fetching files from backend...");
-        const res = await axios.get("https://fusion0-1.onrender.com/api/files");
+        const res = await axios.get("https://fusion-testingphase1.onrender.com/api/files");
         console.log("✅ Files fetched successfully:", res.data);
         setFiles(res.data);
       } catch (error) {
@@ -35,7 +35,7 @@ export default function ViewUploads() {
     if (!window.confirm("Are you sure you want to delete this file?")) return;
     try {
       console.log("🗑️ Deleting file:", filename);
-      await axios.delete(`https://fusion0-1.onrender.com/api/files/${filename}`);
+      await axios.delete(`https://fusion-testingphase1.onrender.com/api/files/${filename}`);
 
       setFiles(files.filter((f) => f.filename !== filename));
       toast.success("🗑️ File deleted successfully!");
@@ -101,7 +101,7 @@ export default function ViewUploads() {
 
               <div className="file-actions">
                 <a
-                  href={`https://fusion0-1.onrender.com/api/files/file/${file.filename}`}
+                  href={`https://fusion-testingphase1.onrender.com/api/files/file/${file.filename}`}
                   target="_blank"
                   rel="noreferrer"
                   className="view-btn"

@@ -8,7 +8,7 @@ export default function TeacherUnit3ManageAssignments() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("https://fusion-backend-testing.onrender.com/api/assignments/all?unit=3")
+    axios.get("https://fusion-testingphase1.onrender.com/api/assignments/all?unit=3")
       .then((res) => {
         console.log("Unit 3 assignments → ", res.data.assignments);
         setAssignments(res.data.assignments || []);
@@ -18,7 +18,7 @@ export default function TeacherUnit3ManageAssignments() {
 
   const deleteAssignment = async (id) => {
     try {
-      await await axios.delete(`https://fusion-backend-testing.onrender.com/api/assignments/${id}`);;
+      await await axios.delete(`https://fusion-testingphase1.onrender.com/api/assignments/${id}`);;
       alert("Assignment Deleted");
 
       // Refresh list after delete

@@ -21,7 +21,7 @@ export default function TeacherUnit3UploadPPT() {
     formData.append("unit", 3);
     formData.append("file", file);
 
-    await axios.post("https://fusion0-1.onrender.com/api/files/upload", formData); // FIXED URL
+    await axios.post("https://fusion-testingphase1.onrender.com/api/files/upload", formData); // FIXED URL
 
     setSuccess(true); // show success message
   };

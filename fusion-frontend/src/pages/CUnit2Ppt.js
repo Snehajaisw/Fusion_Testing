@@ -13,7 +13,7 @@ export default function CUnit2Ppt() {
       try {
         console.log("📡 Fetching C Unit 2 PPTs...");
 
-        const res = await axios.get("https://fusion0-1.onrender.com/api/notes/filter", {
+        const res = await axios.get("https://fusion-testingphase1.onrender.com/api/notes/filter", {
           params: {
             subject: "c",     // 🔥 C language
             unit: 2,          // 🔥 Unit 2
@@ -64,7 +64,7 @@ export default function CUnit2Ppt() {
 
               <div className="file-actions">
                 <a
-                  href={`https://fusion0-1.onrender.com/api/notes/file/${file.filename}`}
+                  href={`https://fusion-testingphase1.onrender.com/api/notes/file/${file.filename}`}
                   target="_blank"
                   rel="noreferrer"
                   className="view-btn"

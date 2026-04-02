@@ -24,7 +24,7 @@ export default function TeacherUnit1Coding() {
   const fetchQuestions = async () => {
     try {
       const res = await axios.get(
-        "https://fusion0-1.onrender.com/api/coding/practice?language=c"
+        "https://fusion-testingphase1.onrender.com/api/coding/practice?language=c"
       );
       setAllQuestions(res.data.questions || []);
     } catch (error) {
@@ -106,7 +106,7 @@ export default function TeacherUnit1Coding() {
     }
 
     try {
-      await axios.post("https://fusion0-1.onrender.com/api/coding/add", {
+      await axios.post("https://fusion-testingphase1.onrender.com/api/coding/add", {
         title: title,               // ✅ short heading
         description: description,   // ✅ full question
         language: "c",
@@ -151,7 +151,7 @@ export default function TeacherUnit1Coding() {
     if (!window.confirm("Delete this question?")) return;
 
     try {
-      await axios.delete(`https://fusion0-1.onrender.com/api/coding/delete/${id}`);
+      await axios.delete(`https://fusion-testingphase1.onrender.com/api/coding/delete/${id}`);
       fetchQuestions();
       alert("Question deleted!");
     } catch (err) {

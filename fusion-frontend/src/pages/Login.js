@@ -13,7 +13,7 @@ export default function Login() {
     setMsg("");
 
     try {
-      const res = await axios.post("https://fusion-backend-testing.onrender.com/api/auth/login",{
+      const res = await axios.post("https://fusion-testingphase1.onrender.com//api/auth/login",{
         identifier: identifier.trim(),
         password,
       });

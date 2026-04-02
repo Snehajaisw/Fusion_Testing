@@ -17,14 +17,14 @@ int main() {
 
   useEffect(() => {
     axios
-      .get(`https://fusion0-1.onrender.com/api/coding/question/${id}`)
+      .get(`https://fusion-testingphase1.onrender.com/api/coding/question/${id}`)
       .then((res) => setQuestion(res.data.question))
       .catch((err) => console.error(err));
   }, [id]);
 
   const runCode = async () => {
     try {
-      const res = await axios.post("https://fusion0-1.onrender.com/api/coding/run", {
+      const res = await axios.post("https://fusion-testingphase1.onrender.com/api/coding/run", {
         code,
         language: "c",
         testcases: question.testcases,

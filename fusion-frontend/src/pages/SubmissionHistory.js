@@ -10,7 +10,7 @@ export default function SubmissionHistory() {
 
   useEffect(() => {
     axios
-      .get(`https://fusion0-1.onrender.com/api/code/submissions/user/${userId}`)
+      .get(`https://fusion-testingphase1.onrender.com/api/code/submissions/user/${userId}`)
       .then((res) => {
         setSubs(res.data.submissions || []);
         setLoading(false);
