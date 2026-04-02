@@ -1,0 +1,29 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./PageStyles.css";
+
+export default function TeacherCppUnit2() {
+  const navigate = useNavigate();
+
+  return (
+    <div className="learn-container">
+      <h1 className="learn-title">📘 C++ Unit 4– Teacher Panel</h1>
+      <p>Manage Unit 4 C++ notes, PPTs, assignments, and coding practice.</p>
+
+      <div className="button-container">
+        <button className="unit-btn" onClick={() => navigate("/teacher/cpp/unit4/upload-notes")}>  Upload Notes</button>
+        <button className="unit-btn" onClick={() => navigate("/teacher/cpp/unit4/upload-ppt")}> Upload PPT </button>
+        <button className="unit-btn" onClick={() => navigate("/teacher/cpp/unit4/assignments")}>  Assignments</button>
+        <button className="unit-btn" onClick={() => navigate("/teacher/cpp/unit4/coding")}> Coding Practice</button>
+      </div>
+
+      <button 
+        className="back-btn"
+        onClick={() => navigate("/teacher/manage-cpp")}
+        style={{ marginTop: "50px" }}
+      >
+        ⬅ Back to Manage C++ Language
+      </button>
+    </div>
+  );
+}
