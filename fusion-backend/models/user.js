@@ -10,18 +10,14 @@ const userSchema = new mongoose.Schema({
 
   role: {
     type: String,
-    enum: ["student", "admin", "teacher","test_student"],
+    enum: ["student", "admin", "teacher", "test_student"],
     required: true,
   },
 
-  
-
-  // ✅ Only one approval field
+  // ✅ FIXED (no "this" used)
   isApproved: {
     type: Boolean,
-    default: function () {
-      return this.role === "teacher" ? false : true;
-    }
+    default: true, // default sabke liye true
   },
 
   // 👇 students
@@ -29,7 +25,10 @@ const userSchema = new mongoose.Schema({
   section: { type: String },
 
   // 👇 teachers
-  sections: [{ type: String }],
+  sections: {
+    type: [String],
+    default: [],
+  },
 
   extraField: { type: String },
 
