@@ -27,7 +27,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:3000",
-      "https://fusion-frontend-testing.vercel.app",
+       "https://fusion-testing-56lx.vercel.app",
     ],
     credentials: true,
   })
