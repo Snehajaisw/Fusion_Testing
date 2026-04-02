@@ -33,16 +33,15 @@ app.use(
   })
 );
 
-app.options("*", cors());
+//app.options("*", cors());
 
 app.use(express.json());
 
 // routes
-app.use("/api/auth", authRoutes);
 
 
 
-// ------------------------------
+// ------------------------------ 
 // ✅ Basic Routes
 // ------------------------------
 app.use("/api/seed", seedRoutes);
@@ -99,6 +98,10 @@ mongoose.connection.on("disconnected", () => {
 // ------------------------------
 app.get("/", (req, res) => {
   res.send("🚀 Fusion Backend Server is Running Perfectly!");
+});
+
+app.use((req, res) => {
+  res.status(404).send("Route not found");
 });
 
 // ------------------------------
