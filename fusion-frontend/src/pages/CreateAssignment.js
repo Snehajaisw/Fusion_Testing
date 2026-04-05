@@ -178,10 +178,16 @@ export default function CreateAssignment() {
             <h3>Question {i + 1}</h3>
 
             <textarea
-              placeholder="Enter question..."
-              value={q.questionText}
-              onChange={(e) => handleQuestionChange(i, e.target.value)}
-            />
+  placeholder="Enter question..."
+  value={q.questionText}
+  onChange={(e) => handleQuestionChange(i, e.target.value)}
+  style={{
+    width: "100%",
+    minHeight: "100px",
+    whiteSpace: "pre-wrap",
+    fontFamily: "monospace"
+  }}
+/>
 
             <input
               type="text"

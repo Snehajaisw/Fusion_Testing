@@ -185,8 +185,32 @@ export default function StudentAssignment() {
           <h2>📘 Unit {selectedAssignment.unit} – Assignment</h2>
 
           {selectedAssignment.questions.map((q, index) => (
-            <div key={index} className="file-card">
-              <h3>{index + 1}. {q.questionText}</h3>
+            <div
+  key={index}
+  className="file-card"
+  style={{
+    marginBottom: "20px",
+    padding: "20px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px"
+  }}
+>
+              <h3>{index + 1}.</h3>
+
+<pre
+  style={{
+    background: "#1e1e1e",
+    color: "#fff",
+    padding: "10px",
+    borderRadius: "8px",
+    whiteSpace: "pre-wrap",
+    fontFamily: "monospace",
+    marginBottom: "10px"
+  }}
+>
+  <code>{q.questionText}</code>
+</pre>
 
              <input
   type="text"
@@ -194,6 +218,10 @@ export default function StudentAssignment() {
   className="clean-input"
   value={answers[index] || ""}
   onChange={(e) => handleAnswerChange(index, e.target.value)}
+  style={{
+    width: "100%",
+    boxSizing: "border-box"
+  }}
 />
             </div>
           ))}
