@@ -12,13 +12,15 @@ export default function StudentAssignment() {
 
   const [assignments, setAssignments] = useState([]);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
-  const [answers, setAnswers] = useState({});
+  const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState(null);
 
   const [studentName, setStudentName] = useState("");
   const [rollNumber, setRollNumber] = useState("");
   const [detailsFilled, setDetailsFilled] = useState(false);
 
+
+  
   /* -------------------------------------------------------
         FETCH ASSIGNMENTS  (STUDENT API)
   -------------------------------------------------------- */
@@ -42,48 +44,41 @@ export default function StudentAssignment() {
   }
 }, [selectedUnit, rollNumber]);
 
-  const handleOptionSelect = (qIndex, option) => {
-    setAnswers({ ...answers, [qIndex]: option });
-  };
-
+  const handleAnswerChange = (qIndex, value) => {
+  const updated = [...answers];
+  updated[qIndex] = value;
+  setAnswers(updated);
+};
   const handleSubmit = async () => {
-    let correct = 0;
-
-    selectedAssignment.questions.forEach((q, i) => {
-      const chosen = answers[i]?.toString().trim().toLowerCase();
-      const actual = q.correctAnswer?.toString().trim().toLowerCase();
-      if (chosen === actual) correct++;
-    });
-
-    const wrong = selectedAssignment.questions.length - correct;
-    const accuracy = ((correct / selectedAssignment.questions.length) * 100).toFixed(2);
-
-    setResult({ correct, wrong, accuracy });
-
-    try {
-      const res = await axios.post(
-        "https://fusion-testingphase1.onrender.com/api/assignments/performance",
-        {
-          studentName,
-          rollNumber,
-          answers: Object.values(answers),
-          unit: selectedAssignment.unit,
-        }
-      );
-
-      if (!res.data.success) {
-        alert(res.data.message);
-        return;
+  try {
+    const res = await axios.post(
+      "https://fusion-testingphase1.onrender.com/api/assignments/performance",
+      {
+        studentName,
+        rollNumber,
+        answers: Object.values(answers),
+        unit: selectedAssignment.unit,
+        assignmentId: selectedAssignment._id
       }
-    } catch (err) {
-      if (err.response?.data?.message) {
-        alert(err.response.data.message);
-        return;
-      }
-      console.error("❌ Error saving performance:", err);
+    );
+
+    if (!res.data.success) {
+      alert(res.data.message);
+      return;
     }
-  };
 
+    // ✅ SHOW RESULT
+    setResult(res.data.performance);
+
+  } catch (err) {
+    if (err.response?.data?.message) {
+      alert(err.response.data.message);
+      return;
+    }
+    console.error("❌ Error saving performance:", err);
+  }
+  
+};
   const handleAssignmentClick = async (assignment) => {
     if (!rollNumber) return alert("Please enter your details first.");
     if (new Date() > new Date(assignment.deadline)) {
@@ -112,7 +107,7 @@ export default function StudentAssignment() {
 
   return (
     <div className="learn-container">
-      <h1 className="learn-title">🧩 MCQ Assignments – Unit {selectedUnit}</h1>
+      <h1 className="learn-title">🧩 Assignments – Unit {selectedUnit}</h1>
 
       {/* DETAIL FORM */}
       {!detailsFilled && (
@@ -193,16 +188,13 @@ export default function StudentAssignment() {
             <div key={index} className="file-card">
               <h3>{index + 1}. {q.questionText}</h3>
 
-              {q.options.map((opt, oIndex) => (
-                <label key={oIndex} className="option-label">
-                  <input
-                    type="radio"
-                    name={`q-${index}`}
-                    onChange={() => handleOptionSelect(index, opt)}
-                  />
-                  {opt}
-                </label>
-              ))}
+             <input
+  type="text"
+  placeholder="Enter your answer"
+  className="clean-input"
+  value={answers[index] || ""}
+  onChange={(e) => handleAnswerChange(index, e.target.value)}
+/>
             </div>
           ))}
 
@@ -222,6 +214,19 @@ export default function StudentAssignment() {
           <p>✅ Correct: {result.correct}</p>
           <p>❌ Wrong: {result.wrong}</p>
           <p>🎯 Accuracy: {result.accuracy}%</p>
+
+          <button
+      className="view-btn"
+      style={{ marginTop: "20px" }}
+      onClick={() => {
+        setResult(null);
+        setSelectedAssignment(null);
+        setAnswers([]);
+        window.location.href = "/";
+      }}
+    >
+      🚪 Logout
+    </button>
         </div>
       )}
     </div>

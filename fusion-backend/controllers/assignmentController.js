@@ -236,8 +236,9 @@ export const savePerformance = async (req, res) => {
 
     let correct = 0;
     assignment.questions.forEach((q, i) => {
-      const studentAns =
-        answers[i]?.toString().trim().toLowerCase() || "";
+      const studentAns = (
+  answers && answers[i] ? answers[i] : ""
+).toString().trim().toLowerCase();
       const actualAns = q.correctAnswer
         .toString()
         .trim()

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./PageStyles.css";
-const user = JSON.parse(localStorage.getItem("fusionUser"));
 
+const user = JSON.parse(localStorage.getItem("fusionUser"));
 
 export default function CreateAssignment() {
   const navigate = useNavigate();
@@ -18,11 +18,10 @@ export default function CreateAssignment() {
   const [description, setDescription] = useState("");
   const [section, setSection] = useState("");
 
-
+  // ✅ One-word answer structure
   const [questions, setQuestions] = useState(
     Array.from({ length: 10 }, () => ({
       questionText: "",
-      options: ["", "", "", ""], 
       correctAnswer: "",
     }))
   );
@@ -35,19 +34,13 @@ export default function CreateAssignment() {
     setQuestions(updated);
   };
 
-  const handleOptionChange = (qIndex, optIndex, value) => {
-    const updated = [...questions];
-    updated[qIndex].options[optIndex] = value;
-    setQuestions(updated);
-  };
-
   const handleCorrectAnswerChange = (index, value) => {
     const updated = [...questions];
     updated[index].correctAnswer = value;
     setQuestions(updated);
   };
 
-  // ⭐ Updated validation with space-trim + lowercase matching
+  // ✅ Validation for one-word answers
   const validateForm = () => {
     if (!title.trim()) return "❌ Assignment title cannot be empty!";
     if (!description.trim()) return "❌ Assignment description cannot be empty!";
@@ -60,23 +53,13 @@ export default function CreateAssignment() {
         return `❌ Question ${i + 1} is empty!`;
       }
 
-      // Validate options
-      for (let j = 0; j < q.options.length; j++) {
-        if (!q.options[j].trim()) {
-          return `❌ Option ${j + 1} of Question ${i + 1} is empty!`;
-        }
-      }
-
       if (!q.correctAnswer.trim()) {
         return `❌ Correct answer missing in Question ${i + 1}!`;
       }
 
-      // ⭐ Normalize spaces + lowercase for perfect matching
-      const normalizedOptions = q.options.map(o => o.trim().toLowerCase());
-      const normalizedAnswer = q.correctAnswer.trim().toLowerCase();
-
-      if (!normalizedOptions.includes(normalizedAnswer)) {
-        return `❌ Correct answer in Question ${i + 1} must exactly match one of the options (case-insensitive)!`;
+      // Optional: enforce one-word answer
+      if (q.correctAnswer.trim().split(" ").length > 1) {
+        return `❌ Only one-word answer allowed in Question ${i + 1}!`;
       }
     }
 
@@ -94,22 +77,19 @@ export default function CreateAssignment() {
     }
 
     try {
-        await axios.post("https://fusion-testingphase1.onrender.com/api/assignments/create", {
-
-  unit: Number(unit),
-  title,
-  description,
-  deadline,
-  questions,
-  teacherId: user.id,
-  section: section,
-});
-
+      await axios.post("https://fusion-testingphase1.onrender.com/api/assignments/create", {
+        unit: Number(unit),
+        title,
+        description,
+        deadline,
+        questions,
+        teacherId: user.id,
+        section: section,
+      });
 
       setMsg("✅ Assignment published successfully!");
 
       setTimeout(() => navigate("/teacher/manage-c"), 1500);
-
     } catch (error) {
       console.error("Error:", error);
       setMsg("❌ Failed to publish assignment. Try again!");
@@ -120,7 +100,7 @@ export default function CreateAssignment() {
     <div className="learn-container">
       <h1 className="learn-title">🧩 Create C Programming Assignment</h1>
       <p style={{ color: "white" }}>
-        Add 10 questions — each with 4 options and 1 correct answer.
+        Add 10 questions — each with a one-word correct answer.
       </p>
 
       {/* UNIT */}
@@ -138,33 +118,29 @@ export default function CreateAssignment() {
           <option value={4}>Unit 4</option>
         </select>
       </div>
-      {/* SECTION */}
-<div style={{ marginTop: 20, marginBottom: 30 }}>
-  <label style={{ color: "white", fontWeight: "bold" }}>
-    🏫 Section:
-  </label>
-  <select
-    value={section}
-    onChange={(e) => setSection(e.target.value)}
-    className="dropdown"
-    style={{ marginLeft: 10 }}
-    required
-  >
-    <option value="">Select Section</option>
-    {user.sections.map((sec) => (
-      <option key={sec} value={sec}>
-        {sec}
-      </option>
-    ))}
-  </select>
-</div>
 
+      {/* SECTION */}
+      <div style={{ marginTop: 20, marginBottom: 30 }}>
+        <label style={{ color: "white", fontWeight: "bold" }}>🏫 Section:</label>
+        <select
+          value={section}
+          onChange={(e) => setSection(e.target.value)}
+          className="dropdown"
+          style={{ marginLeft: 10 }}
+          required
+        >
+          <option value="">Select Section</option>
+          {user.sections.map((sec) => (
+            <option key={sec} value={sec}>
+              {sec}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {/* TITLE */}
       <div style={{ marginBottom: 25 }}>
-        <label style={{ color: "white", fontWeight: "bold" }}>
-          📝 Assignment Title:
-        </label>
+        <label style={{ color: "white", fontWeight: "bold" }}>📝 Assignment Title:</label>
         <input
           type="text"
           value={title}
@@ -176,9 +152,7 @@ export default function CreateAssignment() {
 
       {/* DEADLINE */}
       <div style={{ marginBottom: 25 }}>
-        <label style={{ color: "white", fontWeight: "bold" }}>
-          ⏳ Deadline:
-        </label>
+        <label style={{ color: "white", fontWeight: "bold" }}>⏳ Deadline:</label>
         <input
           type="datetime-local"
           value={deadline}
@@ -189,9 +163,7 @@ export default function CreateAssignment() {
 
       {/* DESCRIPTION */}
       <div style={{ marginBottom: 25 }}>
-        <label style={{ color: "white", fontWeight: "bold" }}>
-          📝 Description:
-        </label>
+        <label style={{ color: "white", fontWeight: "bold" }}>📝 Description:</label>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
@@ -211,19 +183,9 @@ export default function CreateAssignment() {
               onChange={(e) => handleQuestionChange(i, e.target.value)}
             />
 
-            {q.options.map((opt, j) => (
-              <input
-                key={j}
-                type="text"
-                placeholder={`Option ${j + 1}`}
-                value={opt}
-                onChange={(e) => handleOptionChange(i, j, e.target.value)}
-              />
-            ))}
-
             <input
               type="text"
-              placeholder="Correct answer (must match one option)"
+              placeholder="Correct answer (one word)"
               value={q.correctAnswer}
               onChange={(e) => handleCorrectAnswerChange(i, e.target.value)}
             />
@@ -247,10 +209,7 @@ export default function CreateAssignment() {
         </p>
       )}
 
-      <button
-        className="back-btn"
-        onClick={() => navigate("/teacher/manage-c")}
-      >
+      <button className="back-btn" onClick={() => navigate("/teacher/manage-c")}>
         ⬅ Back to Units
       </button>
     </div>
