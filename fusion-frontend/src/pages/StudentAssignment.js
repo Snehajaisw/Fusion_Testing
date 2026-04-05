@@ -107,7 +107,7 @@ export default function StudentAssignment() {
 
   return (
     <div className="learn-container">
-      <h1 className="learn-title">🧩 Assignments – Unit {selectedUnit}</h1>
+      <h1 className="learn-title">🧩 Lab Quiz</h1>
 
       {/* DETAIL FORM */}
       {!detailsFilled && (
