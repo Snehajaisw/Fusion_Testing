@@ -3193,3 +3193,465 @@ select.clean-input option {
   color: #22c55e;
   font-weight: bold;
 }
+
+
+
+
+/* ===============================
+   🌟 FINAL UI FIX (CLEAN + BALANCED)
+   =============================== */
+
+/* 🌿 MAIN BACKGROUND */
+.learn-container {
+  background: #eef2f7 !important;
+  color: #1e293b !important;
+  align-items: center !important;
+  padding: 30px 15px;
+}
+
+/* 🌿 NAVBAR */
+.learn-title {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  color: white !important;
+  padding: 14px;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  z-index: 1000;
+}
+
+/* ===============================
+   🧾 FORM CARD (Enter Details FIX)
+   =============================== */
+
+.form-card {
+  background: #1e293b !important;
+  padding: 30px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.form-card h2 {
+  color: #ffffff !important;
+}
+
+/* INPUT FIX (IMPORTANT) */
+.clean-input {
+  background: #ffffff !important;
+  color: #111827 !important;
+  border: 1px solid #cbd5e1 !important;
+  padding: 12px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.clean-input::placeholder {
+  color: #64748b !important;   /* FIXED visibility */
+}
+
+/* BUTTON */
+.view-btn {
+  background: #4f46e5 !important;
+  color: white !important;
+  border-radius: 10px;
+  padding: 10px 18px;
+}
+
+.view-btn:hover {
+  background: #4338ca !important;
+}
+
+/* ===============================
+   📦 ASSIGNMENT LIST (ONLY THIS GRID)
+   =============================== */
+
+.assignment-list {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* CARD FIX */
+.assignment-card {
+  background: #1e293b !important;
+  color: #ffffff !important;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  transition: 0.2s;
+}
+
+.assignment-card:hover {
+  transform: translateY(-5px);
+}
+
+/* ===============================
+   ❗ QUESTIONS FIX (NO OVERLAP)
+   =============================== */
+
+.assignment-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 25px !important;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* QUESTION CARD */
+.file-card {
+  background: #1e293b !important;
+  color: #ffffff !important;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* QUESTION TEXT */
+.file-card p {
+  color: #e2e8f0 !important;
+}
+
+/* INPUT INSIDE QUESTION */
+.file-card .clean-input {
+  margin-top: 12px;
+}
+
+/* ===============================
+   🔐 PASSKEY MODAL
+   =============================== */
+
+.passkey-modal {
+  background: #1e293b !important;
+  color: white !important;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* ===============================
+   🎯 FINAL FIX (AS PER YOUR CODE)
+   =============================== */
+
+/* 🌿 MAIN CONTAINER */
+.learn-container {
+  background: #eef2f7 !important;
+  padding: 30px 15px;
+}
+
+/* ===============================
+   📦 ASSIGNMENT LIST (SIDE BY SIDE)
+   =============================== */
+
+/* YE IMPORTANT HAI — assignments ka parent div */
+.learn-container > div {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+  gap: 25px !important;
+  max-width: 1100px;
+  margin: 20px auto;
+}
+
+/* assignment cards */
+.learn-container > div .file-card {
+  width: 100% !important;
+  cursor: pointer;
+}
+
+/* ===============================
+   ❗ QUESTIONS (VERTICAL + GAP)
+   =============================== */
+
+/* jab questions show ho rahe ho */
+.learn-container h2 + div {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 25px !important;
+  max-width: 800px;
+  margin: auto;
+}
+
+/* question card spacing fix */
+.file-card {
+  margin-bottom: 20px !important;
+}
+
+/* ===============================
+   🎨 CARD DESIGN IMPROVEMENT
+   =============================== */
+
+.file-card {
+  background: #1e293b !important;
+  color: #ffffff !important;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+/* text readability */
+.file-card p {
+  color: #e2e8f0 !important;
+}
+
+/* ===============================
+   ✏️ INPUT FIX
+   =============================== */
+
+.clean-input {
+  background: #ffffff !important;
+  color: #111827 !important;
+  border: 1px solid #cbd5e1 !important;
+  width: 100% !important;
+}
+
+.clean-input::placeholder {
+  color: #64748b !important;
+}
+
+/* ===============================
+   🔘 BUTTON
+   =============================== */
+
+.view-btn {
+  background: #4f46e5 !important;
+  color: white !important;
+}
+
+/* ===============================
+   🔝 NAVBAR
+   =============================== */
+
+.learn-title {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #6366f1, #4f46e5);
+  color: white !important;
+  padding: 14px;
+  text-align: center;
+  z-index: 1000;
+}
+/* ===============================
+   ✅ ONLY ASSIGNMENT GRID FIX
+   =============================== */
+
+/* target ONLY assignment list (first div after heading) */
+.learn-container > h2 + div {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ensure cards behave properly */
+.learn-container > h2 + div .file-card {
+  width: 100% !important;
+}
+
+/* ===============================
+   ❗ KEEP QUESTIONS VERTICAL
+   =============================== */
+
+.assignment-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 25px !important;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* ===============================
+   ❗ FIX INPUT OVERFLOW (IMPORTANT)
+   =============================== */
+
+.clean-input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* ===============================
+   ❗ QUESTION CARD SPACING
+   =============================== */
+
+.file-card {
+  margin-bottom: 20px !important;
+}
+
+
+/* ===============================
+   🔥 FINAL PATCH (DO NOT MODIFY ABOVE)
+   =============================== */
+
+/* ❌ REMOVE SIDE EFFECT GRID */
+.learn-container > div {
+  display: block !important;
+}
+
+/* ===============================
+   ✅ ONLY ASSIGNMENT GRID
+   =============================== */
+
+.assignment-list {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px !important;
+  max-width: 1100px;
+  margin: 20px auto;
+}
+
+/* heading FIX (Choose Assignment) */
+.learn-container h2 {
+  text-align: center;
+  margin: 20px 0 10px;
+}
+
+/* ===============================
+   ✅ QUESTION SECTION FIX
+   =============================== */
+
+.assignment-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 30px !important;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* card spacing */
+.file-card {
+  margin-bottom: 10px !important;
+}
+
+/* ===============================
+   ❗ INPUT OVERFLOW FIX
+   =============================== */
+
+.clean-input {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  display: block;
+}
+
+/* ===============================
+   ❗ FORM CARD FIX (CENTER + BUTTON)
+   =============================== */
+
+.form-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+/* inputs inside form */
+.form-card .clean-input {
+  width: 80%;
+}
+
+/* button inside card (IMPORTANT FIX) */
+.form-card .view-btn {
+  width: 80%;
+  position: static !important;
+  margin-top: 10px;
+}
+
+/* ===============================
+   ❗ PASSKEY CENTER FIX
+   =============================== */
+
+.passkey-modal {
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+}
+
+/* overlay (dark background) */
+.passkey-modal::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: -1;
+}
+
+/* ===============================
+   ❗ CARD SIZE CONSISTENCY
+   =============================== */
+
+.assignment-card,
+.file-card {
+  min-height: 180px;
+}
+
+/* ===============================
+   ❗ REMOVE OVERLAP
+   =============================== */
+
+.assignment-list .file-card {
+  transform: none !important;
+}
+
+/* 🔝 FINAL NAVBAR FIX */
+.learn-title {
+  position: fixed !important;   /* sticky se fixed */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+/* content neeche shift ho (IMPORTANT) */
+.learn-container {
+  padding-top: 80px !important;
+}
+
+
+/* 🔐 PERFECT CENTER MODAL */
+.passkey-modal {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+
+  z-index: 99999 !important;
+  width: 320px;
+}
+
+/* FULL SCREEN DARK OVERLAY */
+.passkey-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 99998;
+}
+
+/* FORCE SAME HEIGHT FOR ALL CARDS */
+.assignment-list {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 20px !important;
+  max-width: 1100px !important;
+  margin: 30px auto !important;
+  align-items: stretch !important; /* KEY LINE */
+}
+
+/* MAKE ALL CARDS SAME HEIGHT */
+.assignment-card {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  height: 100% !important;
+  min-height: 280px !important; /* adjust if needed */
+}

@@ -8,7 +8,7 @@ const user = JSON.parse(localStorage.getItem("fusionUser"));
 export default function CreateAssignment() {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const [passkey, setPasskey] = useState("");
   const query = new URLSearchParams(location.search);
   const defaultUnit = query.get("unit") || 1;
 
@@ -42,6 +42,7 @@ export default function CreateAssignment() {
 
   // ✅ Validation for one-word answers
   const validateForm = () => {
+    if (!passkey.trim()) return "❌ Passkey is required!";
     if (!title.trim()) return "❌ Assignment title cannot be empty!";
     if (!description.trim()) return "❌ Assignment description cannot be empty!";
     if (!deadline) return "❌ Deadline is required!";
@@ -77,7 +78,7 @@ export default function CreateAssignment() {
     }
 
     try {
-      await axios.post("https://fusion-testingphase1.onrender.com/api/assignments/create", {
+      await axios.post("https://fusion-testing.onrender.com/api/assignments/create", {
         unit: Number(unit),
         title,
         description,
@@ -85,6 +86,7 @@ export default function CreateAssignment() {
         questions,
         teacherId: user.id,
         section: section,
+        passkey   
       });
 
       setMsg("✅ Assignment published successfully!");
@@ -160,7 +162,16 @@ export default function CreateAssignment() {
           style={{ marginLeft: 10, padding: 10, borderRadius: 8 }}
         />
       </div>
-
+          <div style={{ marginBottom: 25 }}>
+  <label style={{ color: "white", fontWeight: "bold" }}>🔐 Passkey:</label>
+  <input
+    type="text"
+    value={passkey}
+    onChange={(e) => setPasskey(e.target.value)}
+    placeholder="Enter passkey for this quiz..."
+    style={{ width: "100%", marginTop: 10, padding: 10, borderRadius: 8 }}
+  />
+</div>
       {/* DESCRIPTION */}
       <div style={{ marginBottom: 25 }}>
         <label style={{ color: "white", fontWeight: "bold" }}>📝 Description:</label>

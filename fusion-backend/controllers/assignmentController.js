@@ -1,6 +1,6 @@
 import Assignment from "../models/Assignment.js";
 import Performance from "../models/Performance.js";
-
+import bcrypt from "bcrypt";
 /* ================================================================
    🧩 TEACHER: CREATE ASSIGNMENT
 ================================================================ */
@@ -8,8 +8,13 @@ import User from "../models/user.js";
 
 export const createAssignment = async (req, res) => {
   try {
-    const { unit, subject, title, description, questions, deadline, teacherId, section } = req.body;
-
+    const { unit, subject, title, description, questions, deadline, teacherId, section,passkey} = req.body;
+    
+    if (!passkey)
+  return res.status(400).json({
+    success: false,
+    message: "Passkey is required!",
+  });
     if (!title || !unit  || !section)
       return res.status(400).json({
         success: false,
@@ -50,6 +55,8 @@ export const createAssignment = async (req, res) => {
       description: description || "",
       deadline: new Date(deadline),
       questions: formattedQuestions,
+      passkey,
+passkeyRequired: true,
 
       // ⭐ MOST IMPORTANT
       section: section.toUpperCase().trim(),
@@ -91,10 +98,16 @@ export const getAllAssignments = async (req, res) => {
       createdAt: -1,
     });
 
-    res.status(200).json({
-      success: true,
-      assignments,
-    });
+    const safeAssignments = assignments.map(a => {
+  const obj = a.toObject();
+  delete obj.passkey;   // 🔐 hide passkey
+  return obj;
+});
+
+res.status(200).json({
+  success: true,
+  assignments: safeAssignments,
+});
   } catch (error) {
     console.error("❌ Error fetching assignments:", error);
     res.status(500).json({
@@ -196,7 +209,7 @@ export const getAssignment = async (req, res) => {
 ================================================================ */
 export const savePerformance = async (req, res) => {
   try {
-    const { studentName, rollNumber, answers, unit,  } = req.body;
+    const { studentName, rollNumber, answers, unit, assignmentId } = req.body;
     const numericUnit = Number(unit);
 
     // ✅ Get student section
@@ -210,10 +223,7 @@ export const savePerformance = async (req, res) => {
     }
 
     // ✅ Find assignment ONLY of that section
-    const assignment = await Assignment.findOne({
-      unit: numericUnit,
-      section: student.section,   // ⭐ LOCK
-    });
+   const assignment = await Assignment.findById(assignmentId);
 
     if (!assignment) {
       return res.status(404).json({
@@ -334,6 +344,62 @@ export const deleteAssignment = async (req, res) => {
       success: false,
       message: "Error deleting assignment",
       error: error.message,
+    });
+  }
+};
+
+
+
+
+export const verifyPasskey = async (req, res) => {
+  try {
+    const { assignmentId, passkey } = req.body;
+
+
+    if (!assignmentId || !passkey) {
+      return res.status(400).json({
+        success: false,
+        message: "Assignment ID and passkey required",
+      });
+    }
+
+    const assignment = await Assignment.findById(assignmentId);
+
+    if (!assignment) {
+      return res.status(404).json({
+        success: false,
+        message: "Assignment not found",
+      });
+    }
+
+    // ⏳ check expiry (optional)
+    if (assignment.passkeyExpiresAt && new Date() > assignment.passkeyExpiresAt) {
+      return res.status(403).json({
+        success: false,
+        message: "Passkey expired",
+      });
+    }
+
+    // 🔐 compare hashed passkey
+    const isMatch = await bcrypt.compare(passkey, assignment.passkey);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Wrong passkey",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Access granted",
+    });
+
+  } catch (error) {
+    console.error("❌ Error verifying passkey:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
     });
   }
 };

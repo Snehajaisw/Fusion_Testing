@@ -6,9 +6,15 @@ import "./PageStyles.css";
 export default function StudentAssignment() {
   const location = useLocation();
 
-  // 🔥 FIX 1: Read unit from query params
   const query = new URLSearchParams(location.search);
   const selectedUnit = query.get("unit");
+
+  // 🔐 PASSKEY STATES
+  const [showPasskeyModal, setShowPasskeyModal] = useState(false);
+  const [enteredPasskey, setEnteredPasskey] = useState("");
+  const [clickedAssignment, setClickedAssignment] = useState(null);
+
+  const [loading, setLoading] = useState(false);
 
   const [assignments, setAssignments] = useState([]);
   const [selectedAssignment, setSelectedAssignment] = useState(null);
@@ -19,75 +25,109 @@ export default function StudentAssignment() {
   const [rollNumber, setRollNumber] = useState("");
   const [detailsFilled, setDetailsFilled] = useState(false);
 
-
-  
-  /* -------------------------------------------------------
-        FETCH ASSIGNMENTS  (STUDENT API)
-  -------------------------------------------------------- */
+  /* ---------------- FETCH ASSIGNMENTS ---------------- */
   useEffect(() => {
-  const fetchAssignments = async () => {
+    const fetchAssignments = async () => {
+      try {
+        const res = await axios.get(
+          `https://fusion-testing.onrender.com/api/assignments/student?unit=${Number(selectedUnit)}&rollNumber=${rollNumber}`
+        );
+
+        setAssignments(res.data.assignments || []);
+      } catch (error) {
+        console.error("❌ Error fetching assignments:", error);
+      }
+    };
+
+    if (rollNumber) {
+      fetchAssignments();
+    }
+  }, [selectedUnit, rollNumber]);
+
+  /* ---------------- HANDLE ANSWERS ---------------- */
+  const handleAnswerChange = (qIndex, value) => {
+    const updated = [...answers];
+    updated[qIndex] = value;
+    setAnswers(updated);
+  };
+
+  /* ---------------- SUBMIT ---------------- */
+  const handleSubmit = async () => {
     try {
-      const res = await axios.get(
-        `https://fusion-testingphase1.onrender.com/api/assignments/student?unit=${Number(selectedUnit)}&rollNumber=${rollNumber}`
+      const res = await axios.post(
+        "https://fusion-testing.onrender.com/api/assignments/performance",
+        {
+          studentName,
+          rollNumber,
+          answers: Object.values(answers),
+          unit: selectedAssignment.unit,
+          assignmentId: selectedAssignment._id
+        }
       );
 
-      console.log("Student assignments:", res.data);
+      if (!res.data.success) {
+        alert(res.data.message);
+        return;
+      }
 
-      setAssignments(res.data.assignments || []);
-    } catch (error) {
-      console.error("❌ Error fetching assignments:", error);
+      setResult(res.data.performance);
+    } catch (err) {
+      if (err.response?.data?.message) {
+        alert(err.response.data.message);
+        return;
+      }
+      console.error("❌ Error saving performance:", err);
     }
   };
 
-  if (rollNumber) {
-    fetchAssignments();
+  /* ---------------- VERIFY PASSKEY ---------------- */
+  const verifyPasskey = async () => {
+  if (!enteredPasskey.trim()) {
+    return alert("Please enter passkey!");
   }
-}, [selectedUnit, rollNumber]);
 
-  const handleAnswerChange = (qIndex, value) => {
-  const updated = [...answers];
-  updated[qIndex] = value;
-  setAnswers(updated);
-};
-  const handleSubmit = async () => {
+  if (!clickedAssignment) return;
+
+  setLoading(true);
+
   try {
     const res = await axios.post(
-      "https://fusion-testingphase1.onrender.com/api/assignments/performance",
+      "https://fusion-testing.onrender.com/api/assignments/verify-passkey",
       {
-        studentName,
-        rollNumber,
-        answers: Object.values(answers),
-        unit: selectedAssignment.unit,
-        assignmentId: selectedAssignment._id
+        assignmentId: clickedAssignment._id,
+        passkey: enteredPasskey
       }
     );
 
-    if (!res.data.success) {
-      alert(res.data.message);
-      return;
-    }
+    if (res.data.success) {
+      const res2 = await axios.get(
+        `https://fusion-testing.onrender.com/api/assignments/${clickedAssignment._id}`
+      );
 
-    // ✅ SHOW RESULT
-    setResult(res.data.performance);
+      setSelectedAssignment(res2.data);
+      setShowPasskeyModal(false);
+      setEnteredPasskey("");
+      setClickedAssignment(null);
+    }
 
   } catch (err) {
-    if (err.response?.data?.message) {
-      alert(err.response.data.message);
-      return;
-    }
-    console.error("❌ Error saving performance:", err);
+    alert("❌ Wrong passkey!");
+    setEnteredPasskey("");
+  } finally {
+    setLoading(false);
   }
-  
 };
+  /* ---------------- CLICK ASSIGNMENT ---------------- */
   const handleAssignmentClick = async (assignment) => {
     if (!rollNumber) return alert("Please enter your details first.");
+
     if (new Date() > new Date(assignment.deadline)) {
       return alert("Deadline is over! You cannot attempt this assignment.");
     }
 
     try {
       const res = await axios.post(
-        "https://fusion-testingphase1.onrender.com/api/assignments/check",
+        "https://fusion-testing.onrender.com/api/assignments/check",
         {
           rollNumber,
           unit: assignment.unit,
@@ -99,7 +139,10 @@ export default function StudentAssignment() {
         return;
       }
 
-      setSelectedAssignment(assignment);
+      // 🔐 open passkey modal
+      setClickedAssignment(assignment);
+      setShowPasskeyModal(true);
+
     } catch (err) {
       console.log("❌ Error checking attempt:", err);
     }
@@ -107,9 +150,9 @@ export default function StudentAssignment() {
 
   return (
     <div className="learn-container">
-      <h1 className="learn-title">🧩 Lab Quiz</h1>
+      <h1 className="learn-title">ES Lab Quiz</h1>
 
-      {/* DETAIL FORM */}
+      {/* DETAILS */}
       {!detailsFilled && (
         <div className="file-card" style={{ padding: "25px" }}>
           <h2>Enter Your Details</h2>
@@ -121,7 +164,6 @@ export default function StudentAssignment() {
               value={studentName}
               onChange={(e) => setStudentName(e.target.value)}
               className="clean-input"
-              required
             />
 
             <input
@@ -130,7 +172,6 @@ export default function StudentAssignment() {
               value={rollNumber}
               onChange={(e) => setRollNumber(e.target.value)}
               className="clean-input"
-              required
             />
           </div>
 
@@ -147,12 +188,10 @@ export default function StudentAssignment() {
         </div>
       )}
 
-      {/* ASSIGNMENTS LIST */}
+      {/* ASSIGNMENT LIST */}
       {detailsFilled && !selectedAssignment && (
         <div>
-          <h2>📚 Choose an Assignment</h2>
-
-          {assignments.length === 0 && <p>No assignments available for this unit.</p>}
+         <h2 className="assignment-heading">Choose the quiz according to your slot</h2>
 
           {assignments.map((a, i) => {
             const deadline = new Date(a.deadline);
@@ -162,8 +201,8 @@ export default function StudentAssignment() {
               <div
                 key={i}
                 className="file-card"
-                style={{ cursor: "pointer" }}
                 onClick={() => handleAssignmentClick(a)}
+                style={{ cursor: "pointer" }}
               >
                 <h3>📘 {a.title}</h3>
                 <p>📝 {a.description}</p>
@@ -179,82 +218,101 @@ export default function StudentAssignment() {
         </div>
       )}
 
-      {/* SHOW QUESTIONS */}
+      {/* QUESTIONS */}
       {selectedAssignment && !result && (
         <>
           <h2>📘 Unit {selectedAssignment.unit} – Assignment</h2>
 
           {selectedAssignment.questions.map((q, index) => (
-            <div
-  key={index}
-  className="file-card"
-  style={{
-    marginBottom: "20px",
-    padding: "20px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px"
-  }}
->
+            <div key={index} className="file-card">
               <h3>{index + 1}.</h3>
 
-<pre
-  style={{
-    background: "#1e1e1e",
-    color: "#fff",
-    padding: "10px",
-    borderRadius: "8px",
-    whiteSpace: "pre-wrap",
-    fontFamily: "monospace",
-    marginBottom: "10px"
-  }}
->
-  <code>{q.questionText}</code>
-</pre>
+              <pre>
+                <code>{q.questionText}</code>
+              </pre>
 
-             <input
-  type="text"
-  placeholder="Enter your answer"
-  className="clean-input"
-  value={answers[index] || ""}
-  onChange={(e) => handleAnswerChange(index, e.target.value)}
-  style={{
-    width: "100%",
-    boxSizing: "border-box"
-  }}
-/>
+              <input
+                type="text"
+                placeholder="Enter your answer"
+                value={answers[index] || ""}
+                onChange={(e) => handleAnswerChange(index, e.target.value)}
+                className="clean-input"
+              />
             </div>
           ))}
 
           <button className="view-btn" onClick={handleSubmit}>
-            Submit Assignment
+            Submit 
           </button>
         </>
       )}
 
+      {/* PASSKEY MODAL */}
+      {showPasskeyModal && (
+         <div className="passkey-overlay">
+    <div className="passkey-modal">
+  <div style={{
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    background: "rgba(0,0,0,0.7)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 9999
+  }}>
+    
+    <div style={{
+      background: "#1e2a3a",
+      padding: "30px",
+      borderRadius: "12px",
+      width: "300px",
+      textAlign: "center"
+    }}>
+      
+      <h3>🔐 Enter Passkey</h3>
+
+      <input
+  type="text"
+  value={enteredPasskey}
+  onChange={(e) => setEnteredPasskey(e.target.value)}
+  onKeyDown={(e) => {
+    if (e.key === "Enter") verifyPasskey();
+  }}
+  placeholder="Enter passkey"
+/>
+
+      <div style={{ marginTop: "15px" }}>
+<button onClick={verifyPasskey} disabled={loading}>
+  {loading ? "Checking..." : "Submit"}
+</button>
+        <button
+          onClick={() => {
+            setShowPasskeyModal(false);
+            setClickedAssignment(null);
+            setEnteredPasskey("");
+          }}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>        
+)}
+
       {/* RESULT */}
       {result && (
         <div className="result-card">
-          <h3>📊 Your Performance</h3>
-          <p>🧑‍🎓 Name: {studentName}</p>
-          <p>📌 Roll No: {rollNumber}</p>
-          <p>📘 Unit: {selectedAssignment.unit}</p>
-          <p>✅ Correct: {result.correct}</p>
-          <p>❌ Wrong: {result.wrong}</p>
-          <p>🎯 Accuracy: {result.accuracy}%</p>
-
-          <button
-      className="view-btn"
-      style={{ marginTop: "20px" }}
-      onClick={() => {
-        setResult(null);
-        setSelectedAssignment(null);
-        setAnswers([]);
-        window.location.href = "/";
-      }}
-    >
-      🚪 Logout
-    </button>
+          <h3> Your Performance</h3>
+          <p>Name: {studentName}</p>
+          <p>Roll: {rollNumber}</p>
+          <p>Correct: {result.correct}</p>
+          <p>Wrong: {result.wrong}</p>
+          <p>Accuracy: {result.accuracy}%</p>
         </div>
       )}
     </div>

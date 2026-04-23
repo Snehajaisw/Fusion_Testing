@@ -6,10 +6,12 @@ import {
   deleteAssignment,
   savePerformance,
   getAllPerformances,
-  getAssignmentsByUnit  // Teacher fetch by unit
+  getAssignmentsByUnit,
+   verifyPasskey   // Teacher fetch by unit
 } from "../controllers/assignmentController.js";
 
 import Performance from "../models/Performance.js";
+import Assignment from "../models/Assignment.js";
 
 const router = express.Router();
 
@@ -19,15 +21,45 @@ const router = express.Router();
 
 /* ➕ Create a new assignment */
 router.post("/create", createAssignment);
-
+router.post("/verify-passkey", verifyPasskey);
 /* 📘 Get all assignments (Teacher panel) */
 router.get("/all", getAllAssignments);
 
 /* 🔍 Teacher: Get assignments by UNIT */
 router.get("/unit/:unit", getAssignmentsByUnit);
+router.get("/student", getAssignment);
+
+/* 🧠 Save student performance */
+router.post("/performance", savePerformance);
+
+/* 📊 Get all performances */
+router.get("/performance", getAllPerformances);
+
+
 
 /* 🗑 Delete an assignment */
 router.delete("/:id", deleteAssignment);
+
+router.get("/:id", async (req, res) => {
+  try {
+    const assignment = await Assignment.findById(req.params.id);
+
+    if (!assignment) {
+      return res.status(404).json({
+        success: false,
+        message: "Assignment not found",
+      });
+    }
+
+    res.status(200).json(assignment);
+  } catch (error) {
+    console.error("Error fetching assignment:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+});
 
 
 
@@ -40,13 +72,7 @@ router.delete("/:id", deleteAssignment);
   correct endpoint the frontend MUST call:
   GET https://fusion-testingphase1.onrender.com/api/assignments/student?unit=3
 */
-router.get("/student", getAssignment);
 
-/* 🧠 Save student performance */
-router.post("/performance", savePerformance);
-
-/* 📊 Get all performances */
-router.get("/performance", getAllPerformances);
 
 
 
@@ -80,6 +106,7 @@ router.post("/check", async (req, res) => {
     });
   }
 });
+
 
 
 export default router;
