@@ -20,13 +20,14 @@ export default function AssignmentResultTable() {
         <p>No results submitted yet.</p>
       ) : (
         <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            marginTop: "20px",
-            color: "white",
-          }}
-        >
+  style={{
+    width: "100%",
+    borderCollapse: "collapse",
+    marginTop: "20px",
+    backgroundColor: "#0f1e35",   // ⭐ ADD THIS
+    color: "#ffffff",             // ⭐ FORCE WHITE
+  }}
+>
           <thead>
             <tr>
               <th>Student Name</th>

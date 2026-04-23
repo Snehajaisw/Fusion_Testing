@@ -3655,3 +3655,181 @@ select.clean-input option {
   height: 100% !important;
   min-height: 280px !important; /* adjust if needed */
 }
+
+
+
+/* ===== CREATE ASSIGNMENT FIX ===== */
+
+.learn-container {
+  align-items: stretch;   /* ⭐ IMPORTANT FIX */
+  text-align: left;       /* ⭐ FIX CENTER ISSUE */
+  max-width: 900px;
+  margin: auto;
+}
+
+/* Inputs + textarea */
+.learn-container input,
+.learn-container textarea,
+.learn-container select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: none;
+  background: #0d1b2a;
+  color: white;
+  font-size: 15px;
+}
+
+/* Dropdown */
+.dropdown {
+  padding: 10px;
+  border-radius: 8px;
+  background: #0d1b2a;
+  color: white;
+  border: none;
+}
+
+/* Question card */
+.assignment-question {
+  background: #1b263b;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Question heading */
+.assignment-question h3 {
+  color: #5bc0be;
+  margin-bottom: 10px;
+}
+
+/* Button spacing */
+.upload-btn {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Back button fix */
+.back-btn {
+  margin-top: 20px;
+}
+
+/* ===== RESULT PAGE TEXT VISIBILITY FIX ===== */
+
+.file-card {
+  background: #1c2541 !important;
+  color: #ffffff !important;   /* ⭐ MAIN FIX */
+}
+
+/* All text inside card */
+.file-card h3 {
+  color: #5bc0be !important;
+  font-size: 18px;
+}
+
+.file-card p {
+  color: #e0e0e0 !important;
+  font-size: 15px;
+}
+
+/* Hover fix */
+.file-card:hover {
+  background: #243447 !important;
+}
+.learn-title {
+  color: #ffffff !important;
+}
+/* ===== FORCE RESULT VISIBILITY FIX ===== */
+
+.learn-container {
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
+/* CARD FIX */
+.file-card {
+  background: #1c2541 !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+/* TEXT FIX */
+.file-card h3 {
+  color: #5bc0be !important;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.file-card {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  color: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px auto;
+  width: 80%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  transition: 0.3s ease;
+}
+/* FORCE VISIBILITY (most important) */
+.learn-container * {
+  opacity: 1 !important;
+}
+
+/* HEADING FIX */
+.learn-title {
+  color: #ffffff !important;
+}.learn-container {
+  opacity: 1 !important;
+}
+
+.file-card {
+  background: #0f1e35 !important;
+  color: #ffffff !important;
+}
+.assignment-result-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #0f1e35;
+  color: #ffffff;
+}
+
+.assignment-result-table th {
+  background: #1f2d46;
+  color: #00d1b2;
+}
+
+.assignment-result-table td {
+  color: #ffffff;
+}
+
+.assignment-result-table tr:hover {
+  background: #152033;
+}.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #0f1e35;
+}
+
+.result-table th {
+  background: #1f2d46;
+  color: #00d1b2;
+  padding: 12px;
+}
+
+.result-table td {
+  color: #ffffff;
+  padding: 12px;
+}
+
+.result-table tr {
+  border-bottom: 1px solid #2c3e50;
+}
+
+.result-table tr:hover {
+  background: #152033;
+}

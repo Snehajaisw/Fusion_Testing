@@ -78,7 +78,7 @@ export default function CreateAssignment() {
     }
 
     try {
-      await axios.post("https://fusion-testing.onrender.com/api/assignments/create", {
+      await axios.post("https://fusion-testingphase1.onrender.com/api/assignments/create", {
         unit: Number(unit),
         title,
         description,

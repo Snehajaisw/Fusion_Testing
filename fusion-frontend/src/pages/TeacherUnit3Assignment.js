@@ -7,10 +7,10 @@ export default function TeacherUnit3Assignment() {
 
   return (
     <div className="teacher-dashboard">
-      <h1 className="dashboard-title">🧠 Unit 3 – Assignments</h1>
-      <p className="dashboard-subtext">
+      <h1 className="dashboard-title">ES PRACTICAL QUIZ</h1>
+      {/* <p className="dashboard-subtext">
         Create, manage, and review student performance for Unit 3 assignments.
-      </p>
+      </p> */}
 
       <div className="button-container">
         <button

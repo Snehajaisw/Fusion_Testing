@@ -30,7 +30,7 @@ export default function StudentAssignment() {
     const fetchAssignments = async () => {
       try {
         const res = await axios.get(
-          `https://fusion-testing.onrender.com/api/assignments/student?unit=${Number(selectedUnit)}&rollNumber=${rollNumber}`
+          `https://fusion-testingphase1.onrender.com/api/assignments/student?unit=${Number(selectedUnit)}&rollNumber=${rollNumber}`
         );
 
         setAssignments(res.data.assignments || []);
@@ -55,7 +55,7 @@ export default function StudentAssignment() {
   const handleSubmit = async () => {
     try {
       const res = await axios.post(
-        "https://fusion-testing.onrender.com/api/assignments/performance",
+        "https://fusion-testingphase1.onrender.com/api/assignments/performance",
         {
           studentName,
           rollNumber,
@@ -92,7 +92,7 @@ export default function StudentAssignment() {
 
   try {
     const res = await axios.post(
-      "https://fusion-testing.onrender.com/api/assignments/verify-passkey",
+      "https://fusion-testingphase1.onrender.com/api/assignments/verify-passkey",
       {
         assignmentId: clickedAssignment._id,
         passkey: enteredPasskey
@@ -101,7 +101,7 @@ export default function StudentAssignment() {
 
     if (res.data.success) {
       const res2 = await axios.get(
-        `https://fusion-testing.onrender.com/api/assignments/${clickedAssignment._id}`
+        `https://fusion-testingphase1.onrender.com/api/assignments/${clickedAssignment._id}`
       );
 
       setSelectedAssignment(res2.data);
@@ -127,7 +127,7 @@ export default function StudentAssignment() {
 
     try {
       const res = await axios.post(
-        "https://fusion-testing.onrender.com/api/assignments/check",
+        "https://fusion-testingphase1.onrender.com/api/assignments/check",
         {
           rollNumber,
           unit: assignment.unit,
